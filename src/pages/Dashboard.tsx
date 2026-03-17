@@ -2,6 +2,7 @@ import { useMemo, useCallback } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import AssetCard, { type Asset } from '../components/AssetCard';
 import AddAssetForm from '../components/AddAssetForm';
+import { useCurrency } from '../context/CurrencyContext';
 
 const initialAssets: Asset[] = [
   { id: 1, name: "Parag Parikh Flexi Cap", type: "Mutual Fund", amount: 25000, isProfitable: true },
@@ -12,7 +13,10 @@ const initialAssets: Asset[] = [
 export default function Dashboard() {
   // 1. CUSTOM HOOK
   // Replaces complex useState and useEffect logic. Automatically syncs with browser localStorage.
-  const [assets, setAssets] = useLocalStorage<Asset[]>('wealth_tracker_data', initialAssets);
+    const [assets, setAssets] = useLocalStorage<Asset[]>('wealth_tracker_data', initialAssets);
+    
+    // We can easily grab the current currency symbol from our global context!
+    const { symbol } = useCurrency();
 
   // 2. USE-CALLBACK (Add Function)
   // Caches this function in memory so React doesn't recreate it on every render.
@@ -45,7 +49,7 @@ export default function Dashboard() {
         
         <div className="bg-white border border-slate-200 p-6 rounded-xl shadow-sm mb-8">
           <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-1">Total Portfolio</h2>
-          <h1 className="text-4xl font-extrabold text-blue-600">₹{totalValue.toLocaleString('en-IN')}</h1>
+                  <h1 className="text-4xl font-extrabold text-blue-600">{ symbol }{totalValue.toLocaleString('en-IN')}</h1>
         </div>
 
         {/* Passing our cached Add function down to the form via props */}

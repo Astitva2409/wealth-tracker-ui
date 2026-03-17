@@ -1,3 +1,5 @@
+import { useCurrency } from "../context/CurrencyContext";
+
 export interface Asset {
   id: number;
   name: string;
@@ -14,6 +16,8 @@ interface AssetCardProps extends Asset {
 
 // 2. DESTRUCTURE THE NEW PROP
 export default function AssetCard({ id, name, type, amount, isProfitable, onDelete }: AssetCardProps) {
+  const { symbol } = useCurrency();
+  
   return (
     <div className="bg-white border border-slate-200 p-4 rounded-lg shadow-sm flex justify-between items-center mb-3 hover:shadow-md transition-shadow">
       
@@ -29,7 +33,7 @@ export default function AssetCard({ id, name, type, amount, isProfitable, onDele
         <div>
           <p className="text-sm text-slate-500 mb-1">Current Value</p>
           <p className={`text-lg font-bold ${isProfitable ? 'text-emerald-600' : 'text-rose-600'}`}>
-            ₹{amount.toLocaleString('en-IN')}
+            { symbol }{amount.toLocaleString('en-IN')}
           </p>
         </div>
 

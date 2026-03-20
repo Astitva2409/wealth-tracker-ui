@@ -1,7 +1,8 @@
 /* eslint-disable react-refresh/only-export-components */
 // ^^^ THE FIX: We tell Vite's linter to relax for this specific file.
 
-import { createContext, useState, type ReactNode, useContext } from 'react';
+import { createContext, type ReactNode, useContext } from 'react';
+import { useLocalStorage } from '../hooks/useLocalStorage';
 
 interface CurrencyContextType {
   currency: string;
@@ -12,7 +13,7 @@ interface CurrencyContextType {
 export const CurrencyContext = createContext<CurrencyContextType | undefined>(undefined);
 
 export function CurrencyProvider({ children }: { children: ReactNode }) {
-  const [currency, setCurrencyState] = useState<string>('INR');
+  const [currency, setCurrencyState] = useLocalStorage<string>('wealth_tracker_currency', 'INR');
   const symbol = currency === 'INR' ? '₹' : '$';
 
   const storeValue = {

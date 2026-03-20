@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
 import Settings from './pages/Settings';
 import Navbar from './components/Navbar';
+import Transactions from './pages/Transactions';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       {/* 2. The Routes act as the changing "body" of the page */}
       <Routes>
         <Route path="/" element={<Dashboard />} />
+        <Route path="/transactions" element={<Transactions />} />
         <Route path="/settings" element={<Settings />} />
       </Routes>
     </div>

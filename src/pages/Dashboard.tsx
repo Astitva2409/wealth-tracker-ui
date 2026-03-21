@@ -17,6 +17,7 @@ import {
     type AssetResponse,
 } from '../api/assetApi';
 import type { PortfolioDataPoint } from '../types';
+import { DashboardSkeleton } from '../components/skeletons/Skeletons';
 
 const portfolioHistory: PortfolioDataPoint[] = [
     { date: 'Oct', value: 42000 },
@@ -106,11 +107,7 @@ export default function Dashboard() {
 
     // ── Loading state ─────────────────────────────────────────
     if (assetsLoading || summaryLoading) {
-        return (
-            <div className="min-h-screen bg-slate-50 flex items-center justify-center">
-                <p className="text-slate-500 text-sm animate-pulse">Loading portfolio...</p>
-            </div>
-        );
+        return <DashboardSkeleton />;
     }
 
     // ── Error state ───────────────────────────────────────────

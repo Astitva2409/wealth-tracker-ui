@@ -13,42 +13,43 @@ import {
     type TransactionResponse,
     type TransactionType,
 } from '../api/transactionApi';
+import { TransactionsSkeleton } from '../components/skeletons/Skeletons';
 
 // ── Display maps ─────────────────────────────────────────────
 const TX_TYPE_COLORS: Record<TransactionType, string> = {
-    'SIP':      'bg-blue-50 text-blue-700',
+    'SIP': 'bg-blue-50 text-blue-700',
     'LUMP_SUM': 'bg-amber-50 text-amber-700',
 };
 
 const TX_TYPE_DISPLAY: Record<TransactionType, string> = {
-    'SIP':      'SIP',
+    'SIP': 'SIP',
     'LUMP_SUM': 'Lump Sum',
 };
 
 const ASSET_TYPE_COLORS: Record<string, string> = {
     'MUTUAL_FUND': 'bg-emerald-50 text-emerald-700',
-    'ETF':         'bg-purple-50 text-purple-700',
-    'STOCK':       'bg-rose-50 text-rose-600',
+    'ETF': 'bg-purple-50 text-purple-700',
+    'STOCK': 'bg-rose-50 text-rose-600',
 };
 
 const ASSET_TYPE_DISPLAY: Record<string, string> = {
     'MUTUAL_FUND': 'Mutual Fund',
-    'ETF':         'ETF',
-    'STOCK':       'Stock',
+    'ETF': 'ETF',
+    'STOCK': 'Stock',
 };
 
 type SortField = 'transactionDate' | 'amount';
 type SortOrder = 'asc' | 'desc';
 
 export default function Transactions() {
-    const { symbol }      = useCurrency();
-    const queryClient     = useQueryClient();
+    const { symbol } = useCurrency();
+    const queryClient = useQueryClient();
 
     // ── Filter + Sort state ──────────────────────────────────
-    const [search, setSearch]         = useState('');
+    const [search, setSearch] = useState('');
     const [filterType, setFilterType] = useState<TransactionType | 'All'>('All');
-    const [sortField, setSortField]   = useState<SortField>('transactionDate');
-    const [sortOrder, setSortOrder]   = useState<SortOrder>('desc');
+    const [sortField, setSortField] = useState<SortField>('transactionDate');
+    const [sortOrder, setSortOrder] = useState<SortOrder>('desc');
 
     // ── Fetch transactions ────────────────────────────────────
     const {
@@ -97,11 +98,11 @@ export default function Transactions() {
 
     // ── Summary stats ─────────────────────────────────────────
     const stats = useMemo(() => {
-        const total   = transactions.reduce((sum, t) => sum + t.amount, 0);
-        const sipSum  = transactions.filter(t => t.transactionType === 'SIP')
-                                    .reduce((sum, t) => sum + t.amount, 0);
+        const total = transactions.reduce((sum, t) => sum + t.amount, 0);
+        const sipSum = transactions.filter(t => t.transactionType === 'SIP')
+            .reduce((sum, t) => sum + t.amount, 0);
         const lumpSum = transactions.filter(t => t.transactionType === 'LUMP_SUM')
-                                    .reduce((sum, t) => sum + t.amount, 0);
+            .reduce((sum, t) => sum + t.amount, 0);
         return { total, sipSum, lumpSum };
     }, [transactions]);
 
@@ -128,11 +129,7 @@ export default function Transactions() {
 
     // ── Loading state ─────────────────────────────────────────
     if (isLoading) {
-        return (
-            <div className="min-h-screen bg-slate-50 flex items-center justify-center">
-                <p className="text-slate-500 text-sm animate-pulse">Loading transactions...</p>
-            </div>
-        );
+        return <TransactionsSkeleton />;
     }
 
     // ── Error state ───────────────────────────────────────────
@@ -158,9 +155,9 @@ export default function Transactions() {
                 {/* Summary cards */}
                 <div className="grid grid-cols-3 gap-4 mb-6">
                     {[
-                        { label: 'Total invested',  value: `${symbol}${stats.total.toLocaleString('en-IN')}`,  color: 'text-slate-800' },
-                        { label: 'Via SIP',         value: `${symbol}${stats.sipSum.toLocaleString('en-IN')}`, color: 'text-blue-600'  },
-                        { label: 'Lump sum',        value: `${symbol}${stats.lumpSum.toLocaleString('en-IN')}`,color: 'text-amber-600' },
+                        { label: 'Total invested', value: `${symbol}${stats.total.toLocaleString('en-IN')}`, color: 'text-slate-800' },
+                        { label: 'Via SIP', value: `${symbol}${stats.sipSum.toLocaleString('en-IN')}`, color: 'text-blue-600' },
+                        { label: 'Lump sum', value: `${symbol}${stats.lumpSum.toLocaleString('en-IN')}`, color: 'text-amber-600' },
                     ].map((s) => (
                         <div key={s.label} className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
                             <p className="text-xs text-slate-500 uppercase tracking-wider mb-1">{s.label}</p>
@@ -190,11 +187,10 @@ export default function Transactions() {
                                 <button
                                     key={type}
                                     onClick={() => setFilterType(type)}
-                                    className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap ${
-                                        filterType === type
+                                    className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap ${filterType === type
                                             ? 'bg-emerald-600 text-white'
                                             : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
-                                    }`}
+                                        }`}
                                 >
                                     {type === 'LUMP_SUM' ? 'Lump Sum' : type}
                                 </button>
@@ -206,21 +202,19 @@ export default function Transactions() {
                         <span className="text-xs text-slate-400 self-center">Sort by:</span>
                         <button
                             onClick={() => handleSort('transactionDate')}
-                            className={`text-xs font-medium px-3 py-1.5 rounded-lg transition-colors ${
-                                sortField === 'transactionDate'
+                            className={`text-xs font-medium px-3 py-1.5 rounded-lg transition-colors ${sortField === 'transactionDate'
                                     ? 'bg-slate-800 text-white'
                                     : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
-                            }`}
+                                }`}
                         >
                             Date {sortIcon('transactionDate')}
                         </button>
                         <button
                             onClick={() => handleSort('amount')}
-                            className={`text-xs font-medium px-3 py-1.5 rounded-lg transition-colors ${
-                                sortField === 'amount'
+                            className={`text-xs font-medium px-3 py-1.5 rounded-lg transition-colors ${sortField === 'amount'
                                     ? 'bg-slate-800 text-white'
                                     : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
-                            }`}
+                                }`}
                         >
                             Amount {sortIcon('amount')}
                         </button>

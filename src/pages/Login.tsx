@@ -18,8 +18,7 @@ export default function Login() {
   const navigate  = useNavigate();
   const location  = useLocation();
 
-  // ── Form state ────────────────────────────────────────────
-  const [email, setEmail]       = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   // CONCEPT: Error + Loading state
@@ -27,7 +26,7 @@ export default function Login() {
   // - isLoading: true while the request is in-flight → disable button, show spinner
   // - error: non-null when the request fails → show message to user
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError]         = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   // ── Where to redirect after login ────────────────────────
   // CONCEPT: Reading router state passed via <Navigate state={...}>

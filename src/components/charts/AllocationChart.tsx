@@ -1,10 +1,5 @@
 // =============================================================
 //  src/components/charts/AllocationChart.tsx
-//
-//  WHAT CHANGED FROM WEEK 1:
-//  - Accepts simplified ChartAsset type instead of full Asset
-//  - Handles both MUTUAL_FUND (backend) and "Mutual Fund" (legacy)
-// =============================================================
 
 import { useMemo } from 'react';
 import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip } from 'recharts';
@@ -79,7 +74,7 @@ export default function AllocationChart({ assets, symbol }: AllocationChartProps
                 Asset Allocation
             </h2>
             <div className="flex items-center gap-6">
-                <div className="h-36 w-36 flex-shrink-0">
+                <div className="h-36 w-36 shrink-0">
                     <ResponsiveContainer width="100%" height="100%">
                         <PieChart>
                             <Pie data={allocationData} cx="50%" cy="50%"
@@ -97,7 +92,7 @@ export default function AllocationChart({ assets, symbol }: AllocationChartProps
                     {allocationData.map((entry) => (
                         <div key={entry.name} className="flex items-center justify-between">
                             <div className="flex items-center gap-2">
-                                <div className="w-2.5 h-2.5 rounded-full flex-shrink-0"
+                                <div className="w-2.5 h-2.5 rounded-full shrink-0"
                                     style={{ backgroundColor: entry.color }} />
                                 <span className="text-sm text-slate-600">{entry.name}</span>
                             </div>

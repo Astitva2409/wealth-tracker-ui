@@ -5,13 +5,13 @@
 // =============================================================
 
 export interface Asset {
-  id: number;
-  name: string;
-  type: 'Mutual Fund' | 'ETF' | 'Stock';
-  amount: number;
-  purchasePrice: number;
-  currentPrice: number;
-  isProfitable: boolean;
+    id: number;
+    name: string;
+    type: 'Mutual Fund' | 'ETF' | 'Stock';
+    amount: number;
+    purchasePrice: number;
+    currentPrice: number;
+    isProfitable: boolean;
 }
 
 export type NewAssetPayload = Omit<Asset, 'id'>;
@@ -22,17 +22,17 @@ export type NewAssetPayload = Omit<Asset, 'id'>;
 // Instead of writing 'SIP' | 'Lump Sum' everywhere,
 // we name it TransactionType. Change it in one place = changes everywhere.
 export type TransactionType = 'SIP' | 'Lump Sum';
-export type SortField      = 'date' | 'amount';
-export type SortOrder      = 'asc'  | 'desc';
+export type SortField = 'date' | 'amount';
+export type SortOrder = 'asc' | 'desc';
 
 export interface Transaction {
-  id: number;
-  assetName: string;
-  assetType: 'Mutual Fund' | 'ETF' | 'Stock';
-  type: TransactionType;
-  amount: number;
-  date: string;    // ISO date string e.g. "2025-03-15"
-  notes?: string;  // the ? means this field is OPTIONAL
+    id: number;
+    assetName: string;
+    assetType: 'Mutual Fund' | 'ETF' | 'Stock';
+    type: TransactionType;
+    amount: number;
+    date: string;    // ISO date string e.g. "2025-03-15"
+    notes?: string;  // the ? means this field is OPTIONAL
 }
 
 // Omit<Transaction, 'id'> = Transaction shape but without the id field
@@ -41,6 +41,6 @@ export type NewTransactionPayload = Omit<Transaction, 'id'>;
 
 // ── Chart ────────────────────────────────────────────────────
 export interface PortfolioDataPoint {
-  date: string;
-  value: number;
+    date: string;
+    value: number;
 }

@@ -14,12 +14,7 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-    // All requests go to this base URL
-    // In production: replace with your deployed backend URL
-    baseURL: 'http://localhost:8080',
-    headers: {
-        'Content-Type': 'application/json',
-    },
+    baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080',
 });
 
 // ── Request Interceptor ──────────────────────────────────────

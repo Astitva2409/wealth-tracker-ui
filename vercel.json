@@ -3,6 +3,10 @@
     {
       "source": "/api/:path*",
       "destination": "http://wealth-tracker-backend-env.eba-mur49mnf.ap-south-1.elasticbeanstalk.com/api/:path*"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }

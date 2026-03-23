@@ -16,6 +16,7 @@ export default function AddAssetForm({ onAddAsset, isLoading }: AddAssetFormProp
     const [assetType, setAssetType] = useState<AssetType>('MUTUAL_FUND');
     const [isOpen, setIsOpen] = useState(false);
     const [symbol, setSymbol] = useState('');
+    const [units, setUnits] = useState<number | ''>('');
 
     const nameInputRef = useRef<HTMLInputElement>(null);
 
@@ -29,6 +30,7 @@ export default function AddAssetForm({ onAddAsset, isLoading }: AddAssetFormProp
             assetType,
             purchasePrice: Number(purchasePrice),
             currentPrice: Number(currentPrice),
+            units: units !== '' ? Number(units) : undefined
         });
 
         setName('');
@@ -38,6 +40,7 @@ export default function AddAssetForm({ onAddAsset, isLoading }: AddAssetFormProp
         setSymbol('');
         setIsOpen(false);
         setTimeout(() => nameInputRef.current?.focus(), 50);
+        setUnits('');
     };
 
     if (!isOpen) {
@@ -110,6 +113,18 @@ export default function AddAssetForm({ onAddAsset, isLoading }: AddAssetFormProp
                             onChange={(e) => setCurrentPrice(e.target.value === '' ? '' : Number(e.target.value))}
                             className="border border-slate-200 bg-slate-50 focus:bg-white p-3 rounded-lg w-full text-sm outline-none focus:ring-2 focus:ring-emerald-400 transition"
                             required
+                        />
+                    </div>
+                    <div>
+                        <label className="text-xs font-semibold text-slate-500 mb-1 block">
+                            Units Purchased
+                        </label>
+                        <input
+                            type="number"
+                            placeholder="e.g. 20.5 units"
+                            value={units}
+                            onChange={(e) => setUnits(e.target.value === '' ? '' : Number(e.target.value))}
+                            className="border border-slate-200 bg-slate-50 focus:bg-white p-3 rounded-lg w-full text-sm outline-none focus:ring-2 focus:ring-emerald-400 transition"
                         />
                     </div>
                 </div>

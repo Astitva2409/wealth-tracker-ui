@@ -8,6 +8,7 @@ export interface Asset {
     id: number;
     name: string;
     symbol?: string;
+    units?: number
     type: 'Mutual Fund' | 'ETF' | 'Stock';
     amount: number;
     purchasePrice: number;

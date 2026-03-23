@@ -20,6 +20,7 @@ export const ASSET_TYPE_DISPLAY: Record<AssetType, string> = {
 export interface AssetPayload {
     name: string;
     symbol?: string;
+    units?: number
     assetType: AssetType;
     purchasePrice: number;
     currentPrice: number;
@@ -28,6 +29,8 @@ export interface AssetPayload {
 export interface AssetResponse {
     id: number;
     name: string;
+    symbol?: string
+    units?: number
     assetType: AssetType;
     purchasePrice: number;
     currentPrice: number;

@@ -59,6 +59,8 @@ export default function Transactions() {
     } = useQuery<TransactionResponse[]>({
         queryKey: ['transactions'],
         queryFn: getTransactionsApi,
+        refetchInterval: 1000 * 60 * 5,
+        refetchIntervalInBackground: false,
     });
 
     // ── Add mutation ──────────────────────────────────────────

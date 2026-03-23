@@ -46,6 +46,8 @@ export default function Dashboard() {
     } = useQuery<AssetResponse[]>({
         queryKey: ['assets'],
         queryFn: getAssetsApi,
+        refetchInterval: 1000 * 60 * 5,       
+        refetchIntervalInBackground: false,
     });
 
     // ── Fetch portfolio summary ───────────────────────────────
@@ -55,6 +57,8 @@ export default function Dashboard() {
     } = useQuery({
         queryKey: ['portfolio-summary'],
         queryFn: getPortfolioSummaryApi,
+        refetchInterval: 1000 * 60 * 5,
+        refetchIntervalInBackground: false,
     });
 
     // ── Add asset mutation ────────────────────────────────────

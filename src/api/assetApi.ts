@@ -19,6 +19,7 @@ export const ASSET_TYPE_DISPLAY: Record<AssetType, string> = {
 
 export interface AssetPayload {
     name: string;
+    symbol?: string;
     assetType: AssetType;
     purchasePrice: number;
     currentPrice: number;

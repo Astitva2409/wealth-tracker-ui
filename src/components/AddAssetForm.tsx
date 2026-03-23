@@ -10,11 +10,12 @@ interface AddAssetFormProps {
 }
 
 export default function AddAssetForm({ onAddAsset, isLoading }: AddAssetFormProps) {
-    const [name, setName]                 = useState('');
+    const [name, setName] = useState('');
     const [purchasePrice, setPurchasePrice] = useState<number | ''>('');
-    const [currentPrice, setCurrentPrice]   = useState<number | ''>('');
-    const [assetType, setAssetType]         = useState<AssetType>('MUTUAL_FUND');
-    const [isOpen, setIsOpen]               = useState(false);
+    const [currentPrice, setCurrentPrice] = useState<number | ''>('');
+    const [assetType, setAssetType] = useState<AssetType>('MUTUAL_FUND');
+    const [isOpen, setIsOpen] = useState(false);
+    const [symbol, setSymbol] = useState('');
 
     const nameInputRef = useRef<HTMLInputElement>(null);
 
@@ -24,6 +25,7 @@ export default function AddAssetForm({ onAddAsset, isLoading }: AddAssetFormProp
 
         onAddAsset({
             name,
+            symbol: (assetType === 'STOCK' || assetType === 'ETF') ? symbol || undefined : undefined,
             assetType,
             purchasePrice: Number(purchasePrice),
             currentPrice: Number(currentPrice),
@@ -33,6 +35,7 @@ export default function AddAssetForm({ onAddAsset, isLoading }: AddAssetFormProp
         setPurchasePrice('');
         setCurrentPrice('');
         setAssetType('MUTUAL_FUND');
+        setSymbol('');
         setIsOpen(false);
         setTimeout(() => nameInputRef.current?.focus(), 50);
     };
@@ -65,7 +68,6 @@ export default function AddAssetForm({ onAddAsset, isLoading }: AddAssetFormProp
                     className="border border-slate-200 bg-slate-50 focus:bg-white p-3 rounded-lg w-full text-sm outline-none focus:ring-2 focus:ring-emerald-400 transition"
                     required
                 />
-
                 <select
                     value={assetType}
                     onChange={(e) => setAssetType(e.target.value as AssetType)}
@@ -76,6 +78,16 @@ export default function AddAssetForm({ onAddAsset, isLoading }: AddAssetFormProp
                     <option value="ETF">ETF</option>
                     <option value="STOCK">Stock</option>
                 </select>
+
+                {(assetType === 'STOCK' || assetType === 'ETF') && (
+                    <input
+                        type="text"
+                        placeholder="BSE Symbol (e.g. IVZINGOLD, HDFCBANK)"
+                        value={symbol}
+                        onChange={(e) => setSymbol(e.target.value.toUpperCase())}
+                        className="w-full border rounded px-3 py-2 text-sm"
+                    />
+                )}
 
                 <div className="grid grid-cols-2 gap-3">
                     <div>
@@ -104,11 +116,10 @@ export default function AddAssetForm({ onAddAsset, isLoading }: AddAssetFormProp
 
                 {/* Live gain/loss preview */}
                 {purchasePrice !== '' && currentPrice !== '' && (
-                    <div className={`text-xs font-medium px-3 py-2 rounded-lg ${
-                        Number(currentPrice) >= Number(purchasePrice)
-                            ? 'bg-emerald-50 text-emerald-700'
-                            : 'bg-rose-50 text-rose-700'
-                    }`}>
+                    <div className={`text-xs font-medium px-3 py-2 rounded-lg ${Number(currentPrice) >= Number(purchasePrice)
+                        ? 'bg-emerald-50 text-emerald-700'
+                        : 'bg-rose-50 text-rose-700'
+                        }`}>
                         {Number(currentPrice) >= Number(purchasePrice)
                             ? `▲ Gain: ₹${(Number(currentPrice) - Number(purchasePrice)).toLocaleString('en-IN')}`
                             : `▼ Loss: ₹${(Number(purchasePrice) - Number(currentPrice)).toLocaleString('en-IN')}`

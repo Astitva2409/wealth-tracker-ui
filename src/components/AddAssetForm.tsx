@@ -115,18 +115,18 @@ export default function AddAssetForm({ onAddAsset, isLoading }: AddAssetFormProp
                             required
                         />
                     </div>
-                    <div>
-                        <label className="text-xs font-semibold text-slate-500 mb-1 block">
-                            Units Purchased
-                        </label>
-                        <input
-                            type="number"
-                            placeholder="e.g. 20.5 units"
-                            value={units}
-                            onChange={(e) => setUnits(e.target.value === '' ? '' : Number(e.target.value))}
-                            className="border border-slate-200 bg-slate-50 focus:bg-white p-3 rounded-lg w-full text-sm outline-none focus:ring-2 focus:ring-emerald-400 transition"
-                        />
-                    </div>
+                </div>
+                <div>
+                    <label className="text-xs font-semibold text-slate-500 mb-1 block">
+                        Units Purchased
+                    </label>
+                    <input
+                        type="number"
+                        placeholder="e.g. 20.5 units"
+                        value={units}
+                        onChange={(e) => setUnits(e.target.value === '' ? '' : Number(e.target.value))}
+                        className="border border-slate-200 bg-slate-50 focus:bg-white p-3 rounded-lg w-full text-sm outline-none focus:ring-2 focus:ring-emerald-400 transition"
+                    />
                 </div>
 
                 {/* Live gain/loss preview */}

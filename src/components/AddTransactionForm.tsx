@@ -11,13 +11,14 @@ interface AddTransactionFormProps {
 }
 
 export default function AddTransactionForm({ onAdd, isLoading }: AddTransactionFormProps) {
-    const [assetName, setAssetName]   = useState('');
-    const [assetType, setAssetType]   = useState<AssetType>('MUTUAL_FUND');
-    const [txType, setTxType]         = useState<TransactionType>('SIP');
-    const [amount, setAmount]         = useState<number | ''>('');
-    const [date, setDate]             = useState('');
-    const [notes, setNotes]           = useState('');
-    const [isOpen, setIsOpen]         = useState(false);
+    const [assetName, setAssetName] = useState('');
+    const [assetType, setAssetType] = useState<AssetType>('MUTUAL_FUND');
+    const [txType, setTxType] = useState<TransactionType>('SIP');
+    const [amount, setAmount] = useState<number | ''>('');
+    const [date, setDate] = useState('');
+    const [notes, setNotes] = useState('');
+    const [isOpen, setIsOpen] = useState(false);
+    const [navAtPurchase, setNavAtPurchase] = useState<number | ''>('');
 
     const firstInputRef = useRef<HTMLInputElement>(null);
 
@@ -31,6 +32,7 @@ export default function AddTransactionForm({ onAdd, isLoading }: AddTransactionF
             transactionType: txType,
             amount: Number(amount),
             transactionDate: date,
+            navAtPurchase: navAtPurchase !== '' ? Number(navAtPurchase) : undefined,  // ← add
             notes: notes.trim() || undefined,
         });
 
@@ -42,6 +44,7 @@ export default function AddTransactionForm({ onAdd, isLoading }: AddTransactionF
         setNotes('');
         setIsOpen(false);
         setTimeout(() => firstInputRef.current?.focus(), 50);
+        setNavAtPurchase('');
     };
 
     if (!isOpen) {
@@ -135,6 +138,19 @@ export default function AddTransactionForm({ onAdd, isLoading }: AddTransactionF
                             required
                         />
                     </div>
+                </div>
+
+                <div>
+                    <label className="text-xs font-semibold text-slate-500 mb-1 block">
+                        NAV at Purchase (₹)
+                    </label>
+                    <input
+                        type="number"
+                        placeholder="e.g. 65.50 (NAV per unit)"
+                        value={navAtPurchase}
+                        onChange={(e) => setNavAtPurchase(e.target.value === '' ? '' : Number(e.target.value))}
+                        className="border border-slate-200 bg-slate-50 focus:bg-white p-3 rounded-lg text-sm outline-none focus:ring-2 focus:ring-emerald-400 transition w-full"
+                    />
                 </div>
 
                 <input

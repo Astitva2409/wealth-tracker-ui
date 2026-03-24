@@ -9,12 +9,13 @@ import type { AssetType } from './assetApi';
 export type TransactionType = 'SIP' | 'LUMP_SUM';
 
 export interface TransactionPayload {
-    assetName: string;
-    assetType: AssetType;
-    transactionType: TransactionType;
-    amount: number;
-    transactionDate: string; // "YYYY-MM-DD"
-    notes?: string;
+    assetName: string
+    assetType: AssetType
+    transactionType: TransactionType
+    amount: number
+    transactionDate: string
+    navAtPurchase?: number   // ← add
+    notes?: string
 }
 
 export interface TransactionResponse {
